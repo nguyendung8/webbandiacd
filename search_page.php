@@ -79,8 +79,6 @@
    
 <?php include 'header.php'; ?>
 
-<div class="heading head">
-</div>
 
 <section class="search-form">
    <form action="" method="post">

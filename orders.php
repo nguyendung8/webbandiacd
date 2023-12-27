@@ -34,9 +34,6 @@
    
 <?php include 'header.php'; ?>
 
-<div class="heading head">
-</div>
-
 <section class="placed-orders">
 
    <h1 class="title">Đặt hàng</h1>

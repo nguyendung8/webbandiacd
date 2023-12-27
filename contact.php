@@ -52,8 +52,6 @@
    
 <?php include 'header.php'; ?>
 
-<div class="heading head">
-</div>
 
 <section class="contact">
 

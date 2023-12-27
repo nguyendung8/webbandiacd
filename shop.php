@@ -108,8 +108,6 @@
 <body>
    
 <?php include 'header.php'; ?>
-<div class="heading head">
-</div>
 <section class="products">
 
    <h1 class="title">Tất cả sản phẩm</h1>
