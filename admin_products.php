@@ -30,11 +30,11 @@
       if(mysqli_num_rows($select_product_name) > 0){
          $message[] = 'Sản phẩm đã tồn tại.';
       }else{//chưa thì thêm mới
-         $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, cate_id, price, discount, newprice,quantity,initial_quantity, describes, image) VALUES('$name', '$cate_id', '$price', '$discount', '$newprice', '$quantity', '$initial_quantity', '$describe', '$image')") or die('query failed');
+         $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, cate_id, price, discount, newprice, quantity, initial_quantity, describes, image) VALUES('$name', '$cate_id', '$price', '$discount', '$newprice', '$quantity', '$initial_quantity', '$describe', '$image')") or die('query failed');
 
          if($add_product_query){
             if($image_size > 2000000){//kiểm tra kích thước ảnh
-               $message[] = 'Kích tước ảnh quá lớn, hãy cập nhật lại ảnh!';
+               $message[] = 'Kích thước ảnh quá lớn, hãy cập nhật lại ảnh!';
             }else{
                move_uploaded_file($image_tmp_name, $image_folder);//lưu file ảnh xuống
                $message[] = 'Thêm sản phẩm thành công!';
@@ -141,7 +141,7 @@
       <input type="number" min="0" name="discount" class="box" placeholder="% giảm giá" required>
       <input type="number" min="1" name="quantity" class="box" placeholder="Số lượng" required>
       <input type="text" name="describe" class="box" placeholder="Mô tả" required>
-      <input type="file" name="image" accept="image/jpg, image/jpeg, image/png" class="box" required>
+      <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp" class="box" required>
       <input type="submit" value="Thêm" name="add_product" class="btn">
    </form>
 
@@ -157,15 +157,13 @@
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
                <div style="height: -webkit-fill-available;" class="box">
-                  <img style="height: 23rem !important" style="border-radius: 4px;" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
+                  <img style="height: 20rem !important" style="border-radius: 4px;" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                   <div class="name"><?php echo $fetch_products['name']; ?></div>
                   <?php
                   $cate_id =  $fetch_products['cate_id'];
                       $result= mysqli_query($conn, "SELECT * FROM `categorys` WHERE id = $cate_id") or die('Query failed');
                       $cate_name = mysqli_fetch_assoc($result)
                    ?>
-                  <div class="sub-name">Danh mục: <?php echo $cate_name['name']; ?></div>
-                  <div class="sub-name">Mô tả: <?php echo $fetch_products['describes']; ?></div>
                   <div class="price"><span style="text-decoration-line: line-through"><?php echo number_format($fetch_products['price'],0,',','.'  ); ?></span> VND (Giảm giá: <?php echo $fetch_products['discount']; ?>%)</div>
                   <div class="price"><?php echo number_format($fetch_products['newprice'],0,',','.' );; ?> VND (SL: <?php echo $fetch_products['quantity']; ?>)</div>
                   <a href="admin_products.php?update=<?php echo $fetch_products['id']; ?>" class="option-btn">Cập nhật</a>
@@ -213,7 +211,7 @@
                   </select>
                   <input type="number" name="update_price" value="<?php echo $fetch_update['price']; ?>" min="0" class="box" required placeholder="Giá sản phẩm">
                   <input type="number" name="update_quantity" value="<?php echo $fetch_update['quantity']; ?>" min="0" class="box" required placeholder="Số lượng sản phẩm">
-                  <input type="text" name="update_describe" value="<?php echo $fetch_update['describes']; ?>" class="box" required placeholder="Mô tả">
+                  <input type="hidden" name="update_describe" value="<?php echo $fetch_update['describes']; ?>" class="box" required placeholder="Mô tả">
                   <input type="submit" value="update" name="update_product" class="btn">
                   <input type="reset" value="cancel" id="close-update" class="option-btn">
                </form>
